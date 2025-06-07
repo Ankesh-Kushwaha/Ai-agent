@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose =require('mongoose')
 
 const ticketSchema = new mongoose.Schema({
   title: String,
@@ -27,4 +27,4 @@ const ticketSchema = new mongoose.Schema({
 })
 
 
-export default mongoose.model("Ticket", ticketSchema);
+module.exports= mongoose.model("Ticket", ticketSchema);
