@@ -1,9 +1,9 @@
-const mongoose =require('mongoose')
+import  mongoose  from 'mongoose'
 
 const ticketSchema = new mongoose.Schema({
   title: String,
   description: String,
-  status: { type: String, default: "TO_DO", enum: ['IN_PROGRESS', "COMPLETED"] },
+  status: { type: String, default: "TODO", enum: ['IN_PROGRESS', "TODO","COMPLETED"] },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref:"User"
@@ -11,7 +11,7 @@ const ticketSchema = new mongoose.Schema({
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    default:"null"
+    default:null
   },
   priority: String,
   deadline: Date,
@@ -26,5 +26,4 @@ const ticketSchema = new mongoose.Schema({
   }
 })
 
-
-module.exports= mongoose.model("Ticket", ticketSchema);
+export default mongoose.model("Ticket", ticketSchema);

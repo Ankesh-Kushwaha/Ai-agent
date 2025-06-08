@@ -1,14 +1,3 @@
-const { Inngest } = require("inngest")
+import  { Inngest } from "inngest"
 
-const inngest = new Inngest({ id: "ticketing-system" });
-
-
-
-
-
-
-
-
-module.exports = {
-   inngest
-}
+export const inngest = new Inngest({ id: "ticketing-system" });

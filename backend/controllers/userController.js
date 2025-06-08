@@ -1,15 +1,15 @@
-const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken");
-const User = require("../models/user");
-const { inngest } = require('../ingest/client');
-const user = require('../models/user');
-const { authenticate} = require("../middleware/authMiddleware");
+import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken"
+import  User from "../models/user.js"
+import  { inngest } from  '../ingest/client.js'
+import user from '../models/user.js'
+import  { authenticate} from "../middleware/authMiddleware.js"
 
-const userSignUp = async(req,res) => {
-  const { email, password, skills = [] } = req.body;
+export const userSignUp = async(req,res) => {
+  const { email, password, skills = [],role } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, password: hashedPassword, skills });
+    const user = await User.create({ email, password: hashedPassword, skills ,role: role ? role:'user'});
     
     //fire  inngest event
     await inngest.send({
@@ -42,7 +42,7 @@ const userSignUp = async(req,res) => {
   }
 }
 
-const userLogin = async(req,res) => {
+ export const userLogin = async(req,res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -75,7 +75,7 @@ const userLogin = async(req,res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   const { skills=[],role ,email } = req.body;
   try {
     if (req.user?.role !== "admin") return res.status(401).json({ error: "only admin can update" });
@@ -102,7 +102,7 @@ const updateUser = async (req, res) => {
   }
 }
 
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     if (req.user.role !== "admin") return res.status(401).json({ error: "forbidden" });
     const user = await User.find().select("-password");
@@ -117,7 +117,3 @@ const getUser = async (req, res) => {
   }
 }
 
-
-module.exports = {
-  userLogin,userSignUp,updateUser,getUser
-}

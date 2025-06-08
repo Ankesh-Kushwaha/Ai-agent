@@ -1,9 +1,9 @@
-const { inngest } = require("../client");
-const User = require('../../models/user');
-const { NonRetriableError } = require("inngest");
-const { sendMail } = require("../../utils/mailer");
+import  { inngest } from "../client.js"
+import User from '../../models/user.js'
+import { NonRetriableError } from "inngest"
+import { sendMail } from "../../utils/mailer.js"
 
-const userSignUp = inngest.createFunction(
+export const OnuserSignUp = inngest.createFunction(
   { id: "on-user-signup",retries:2 },
   { event:"user/signup" },
   async ({event,step }) => {
@@ -33,3 +33,4 @@ const userSignUp = inngest.createFunction(
     }
   }
 )
+

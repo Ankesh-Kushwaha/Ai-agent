@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const {userLogin,userSignUp,updateUser,getUser} =require('../controllers/userController');
-const { authenticate } = require('../middleware/authMiddleware');
+import {userLogin,userSignUp,updateUser,getUser} from '../controllers/userController.js'
+import  { authenticate }  from '../middleware/authMiddleware.js'
+import {createTicket,getTicket,getTickets} from '../controllers/ticketControllers.js'
 
 //user routes 
 router.post('/user/signup', userSignUp);
@@ -10,6 +11,8 @@ router.post('/user/update', authenticate, updateUser);
 router.get('/user/get',authenticate,getUser)
 
 //ticket routes
+router.post('/ticket/create', authenticate, createTicket);
+router.get('/ticket/getallticket', authenticate, getTickets);
+router.get('/ticket/get', authenticate, getTicket);
 
-
-module.exports = router;
+export default router;
